@@ -26,20 +26,7 @@ const client = new MongoClient(uri, {
 });
 
 //new
-let cachedClient = null;
-let db = null;
 
-async function connectToDatabase() {
-  if (cachedClient && db) {
-    return { client: cachedClient, db };
-  }
-
-  await client.connect();
-  cachedClient = client;
-  db = client.db("KhabarKuriDb");
-
-  return { client: cachedClient, db };
-}
 
 async function run() {
   try {
@@ -47,26 +34,14 @@ async function run() {
     // await client.connect();
 
     // connection
-    // const userCollection = client.db("KhabarKuriDb").collection("users");
-    // const menuCollection = client.db("KhabarKuriDb").collection("menu");
-    // const reviewCollection = client.db("KhabarKuriDb").collection("reviews");
-    // const cartCollection = client.db("KhabarKuriDb").collection("carts");
-    // const paymentCollection = client.db("KhabarKuriDb").collection("payments");
+    const userCollection = client.db("KhabarKuriDb").collection("users");
+    const menuCollection = client.db("KhabarKuriDb").collection("menu");
+    const reviewCollection = client.db("KhabarKuriDb").collection("reviews");
+    const cartCollection = client.db("KhabarKuriDb").collection("carts");
+    const paymentCollection = client.db("KhabarKuriDb").collection("payments");
 
     //new
-    try {
-      const { db } = await connectToDatabase();
-
-      const userCollection = db.collection("users");
-      const menuCollection = db.collection("menu");
-      const reviewCollection = db.collection("reviews");
-      const cartCollection = db.collection("carts");
-      const paymentCollection = db.collection("payments");
-
-      // your routes here...
-    } catch (error) {
-      console.error("Error connecting to database:", error);
-    }
+   
 
     // jwt related apis
     app.post("/jwt", async (req, res) => {
